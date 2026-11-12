@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Primo progetto Cargo</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<main>
+
+<p class="kicker">Lezione 1 · ~15 minuti</p>
+<h1>Dal sorgente all'eseguibile</h1>
+<p class="subtitle">Crei, compili e lanci il tuo primo progetto Rust, e impari a leggere un errore del compilatore.</p>
+
+<div class="note">
+<span class="label">Perché ti serve (missione)</span>
+<p>Il backend del tuo progetto open source sarà, prima di tutto, un progetto <strong>Cargo</strong>. Tutto quello che farai da qui in avanti (server HTTP, database, test) passa dai tre comandi di questa lezione.</p>
+</div>
+
+<h2>1. Un po' di teoria: chi esegue il tuo codice?</h2>
+
+<p>Un processore capisce solo <em>codice macchina</em>. Il testo che scrivi (il <em>sorgente</em>) deve essere tradotto. Ricordi i linguaggi che conosci? Lo fanno in tre modi diversi:</p>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>Linguaggio</th><th>Traduzione</th><th>Cosa ottieni</th><th>Chi libera la memoria</th></tr></thead>
+<tbody>
+<tr><td>C</td><td><code>gcc</code> compila tutto <em>prima</em></td><td>eseguibile nativo</td><td>tu, con <code>free()</code></td></tr>
+<tr><td>Java / Apex</td><td><code>javac</code> → bytecode, poi la JVM</td><td>bytecode per una macchina virtuale</td><td>il garbage collector</td></tr>
+<tr><td>Python</td><td>l'interprete legge mentre esegue</td><td>niente da distribuire, serve l'interprete</td><td>il garbage collector</td></tr>
+<tr><td><strong>Rust</strong></td><td><code>rustc</code> compila tutto <em>prima</em></td><td>eseguibile nativo</td><td><strong>il compilatore decide quando</strong> (ownership)</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>Rust è quindi un linguaggio <strong>compilato in anticipo</strong> (<em>ahead-of-time</em>) come il C: compili una volta e puoi dare l'eseguibile a chi non ha Rust installato.<sup><a href="https://doc.rust-lang.org/book/ch01-02-hello-world.html">[1]</a></sup> Però, a differenza del C, ti garantisce la sicurezza della memoria <em>senza</em> un garbage collector, grazie al sistema di <em>ownership</em>, che vedremo presto.<sup><a href="https://doc.rust-lang.org/book/ch04-00-understanding-ownership.html">[2]</a></sup></p>
+
+<p>Rust è anche a <strong>tipizzazione statica</strong>, come C e Java: il compilatore deve conoscere il tipo di ogni variabile al momento della compilazione (spesso lo deduce da solo).<sup><a href="https://doc.rust-lang.org/book/ch03-02-data-types.html">[3]</a></sup> Così molti errori li scopri compilando, non in produzione.</p>
+
+<h2>2. Gli attrezzi</h2>
+<ul>
+<li><strong><code>rustup</code></strong> installa e aggiorna Rust.</li>
+<li><strong><code>rustc</code></strong> è il compilatore. Lo userai quasi mai direttamente.</li>
+<li><strong><code>cargo</code></strong> è lo strumento di build <em>e</em> il gestore di pacchetti (pensa a Maven o Gradle per Java). Crea i progetti, scarica le dipendenze (i <em>crate</em>), compila, esegue e lancia i test.<sup><a href="https://doc.rust-lang.org/book/ch01-03-hello-cargo.html">[4]</a></sup></li>
+</ul>
+
+<h2>3. Fallo tu</h2>
+
+<div class="task">
+<span class="label">Esercizio · la tua vittoria di oggi</span>
+<ol class="steps">
+<li><strong>Installa Rust</strong> seguendo <a href="https://rustup.rs/">rustup.rs</a> (su Windows scarica l'installer), poi verifica con <code>cargo --version</code>.<br>
+<em>Non sei al tuo computer?</em> Fai i passi 4 e 5 con i pulsanti <strong>▶ Apri nel Playground</strong>: il codice si apre già pronto nel browser, premi <em>Run</em>. Torna ai passi 2-3 quando puoi.</li>
+<li>Dalla cartella del repo crea un progetto:
+<pre><code>cargo new pratica/ciao
+cd pratica/ciao</code></pre></li>
+<li>Guarda cosa ha creato Cargo e lancia il programma:
+<pre><code>ciao/
+├── Cargo.toml      <span class="out"># manifesto: nome, versione, dipendenze</span>
+└── src/
+    └── main.rs     <span class="out"># il codice</span></code></pre>
+<pre><code>cargo run
+<span class="out">   Compiling ciao v0.1.0 (…/pratica/ciao)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.36s
+     Running `target/debug/ciao`</span>
+Hello, world!</code></pre>
+<code>cargo run</code> ha <em>compilato</em> e poi <em>eseguito</em> l'eseguibile che trovi in <code>target/debug/</code>.</li>
+<li>Apri <code>src/main.rs</code>:
+<pre class="play"><code>fn main() {
+    println!("Hello, world!");
+}</code></pre>
+Al posto di <code>"Hello, world!"</code> fai stampare un messaggio tuo e rilancia <code>cargo run</code>.</li>
+<li><strong>Rompilo apposta.</strong> Sostituisci il corpo di <code>main</code> con questo:
+<pre class="play"><code>fn main() {
+    let x = 5;
+    x = 6;
+    println!("{x}");
+}</code></pre>
+Lancia <code>cargo run</code> e <em>leggi</em> l'errore:
+<pre><code><span class="err">error[E0384]: cannot assign twice to immutable variable `x`</span>
+ --> src/main.rs:3:5
+  |
+2 |     let x = 5;
+  |         - first assignment to `x`
+3 |     x = 6;
+  |     ^^^^^ cannot assign twice to immutable variable
+  |
+help: consider making this binding mutable
+  |
+2 |     let mut x = 5;
+  |         +++</code></pre>
+Applica il suggerimento (<code>let mut x</code>) e rilancia: ora stampa <code>6</code>.</li>
+</ol>
+</div>
+
+<h3>Cosa è appena successo</h3>
+<p>In Rust le variabili sono <strong>immutabili per impostazione predefinita</strong>. Per poterle modificare devi dirlo esplicitamente con <code>mut</code>.<sup><a href="https://doc.rust-lang.org/book/ch03-01-variables-and-mutability.html">[5]</a></sup> In C e Java è il contrario: tutto è modificabile a meno che non scrivi <code>const</code> o <code>final</code>.</p>
+<p>E guarda com'è fatto l'errore: ti dice <em>dove</em> (file, riga, colonna), <em>perché</em> (la prima assegnazione è alla riga 2) e <em>come rimediare</em> (il <code>help:</code> con i <code>+++</code>). Gli errori di Rust sono pensati per insegnarti. Leggerli fino in fondo è la competenza più utile di tutto il percorso.</p>
+<p>Ultima cosa: <code>println!</code> ha un <code>!</code> perché è una <em>macro</em>, non una funzione. Per ora ti basta sapere che <code>{x}</code> dentro la stringa stampa il valore di <code>x</code>.</p>
+
+<h2>4. Richiamo</h2>
+<p>Prova a rispondere <em>senza</em> tornare su. Lo sforzo di ricordare è proprio ciò che fissa le cose.</p>
+
+<div class="quiz" data-id="0001">
+<div class="q">
+<p>1. Cosa produce <code>cargo build</code> su un progetto Rust?</p>
+<button class="opt">Bytecode per la JVM</button>
+<button class="opt" data-ok>Un file eseguibile nativo</button>
+<button class="opt">Uno script da interpretare</button>
+<button class="opt">Un archivio di sorgenti</button>
+<p class="why">Rust compila in anticipo in codice macchina, come il C. Lo trovi in <code>target/debug/</code>.</p>
+</div>
+<div class="q">
+<p>2. Qual è la differenza principale con Java nella gestione della memoria?</p>
+<button class="opt">Rust ha garbage collector generazionale</button>
+<button class="opt">Rust libera memoria solo manualmente</button>
+<button class="opt">Rust gira dentro una VM</button>
+<button class="opt" data-ok>Rust non ha garbage collector</button>
+<p class="why">Niente GC e niente <code>free()</code> manuale: è il sistema di ownership a stabilire, in compilazione, quando liberare la memoria.</p>
+</div>
+<div class="q">
+<p>3. A cosa serve <code>cargo check</code>? (Indizio: è nella fonte primaria qui sotto.)</p>
+<button class="opt" data-ok>Controllare errori senza eseguibile</button>
+<button class="opt">Eseguire tutti i test</button>
+<button class="opt">Pubblicare il pacchetto online</button>
+<button class="opt">Aggiornare la versione Rust</button>
+<p class="why">Verifica che il codice compili senza generare l'eseguibile, quindi è più veloce di <code>cargo build</code>. Ottimo da lanciare spesso mentre scrivi.</p>
+</div>
+<div class="q">
+<p>4. Cosa succede compilando <code>let x = 5; x = 6;</code>?</p>
+<button class="opt">Il programma stampa sei</button>
+<button class="opt">Avviso, ma compila comunque</button>
+<button class="opt" data-ok>Errore: x è immutabile</button>
+<button class="opt">Crash quando viene eseguito</button>
+<p class="why">Errore di compilazione E0384. Si risolve con <code>let mut x = 5;</code>.</p>
+</div>
+<p class="score"></p>
+</div>
+
+<h2>5. Se hai più tempo</h2>
+<ul>
+<li>Lancia <code>cargo build --release</code> e confronta <code>target/release/</code> con <code>target/debug/</code>. Quale dei due useresti in produzione per il backend, e perché?</li>
+<li>Installa <a href="https://rustlings.rust-lang.org/">Rustlings</a> (<code>cargo install rustlings</code>, poi <code>rustlings init</code>) e fai gli esercizi <code>intro</code> e <code>variables</code>. Ideali anche per le sessioni da 10 minuti.</li>
+</ul>
+
+<div class="source">
+<span class="label">Fonte primaria da leggere</span>
+<p><a href="https://doc.rust-lang.org/book/ch01-00-getting-started.html"><em>The Rust Programming Language</em>, capitolo 1: Getting Started</a>, il libro ufficiale (gratuito). Se preferisci una versione con quiz integrati, c'è <a href="https://rust-book.cs.brown.edu/ch01-00-getting-started.html">l'edizione interattiva della Brown University</a>.</p>
+</div>
+
+<div class="ask">
+<span class="label">Hai dubbi?</span>
+<p>Chiedi al tuo docente (Claude) qualsiasi cosa non sia chiara: un errore che non capisci, l'installazione che non va, un concetto di teoria da ripassare. Quando hai finito, dimmi com'è andata: incollami l'output o raccontami cosa hai sbagliato nel quiz, così la prossima lezione parte da lì.</p>
+</div>
+
+<p class="meta">Scheda di riferimento: <a href="../reference/cargo-e-basi.html">Cargo e sintassi di base</a> · Fonti: <a href="https://github.com/Leixien/LearningRust/blob/main/RESOURCES.md">RESOURCES.md</a></p>
+
+<nav class="pager">
+<a href="../index.html">← Indice del corso</a>
+<span>Prossima: tipi, funzioni e controllo di flusso (in preparazione)</span>
+</nav>
+
+</main>
+<script src="../assets/quiz.js"></script>
+<script src="../assets/playground.js"></script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cargo e basi</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<main>
+
+<p class="kicker">Riferimento</p>
+<h1>Cargo e sintassi di base</h1>
+<p class="subtitle">Scheda rapida. Cresce lezione dopo lezione.</p>
+
+<h2>Comandi Cargo</h2>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Comando</th><th>Cosa fa</th></tr></thead>
+<tbody>
+<tr><td><code>cargo new nome</code></td><td>crea un progetto (eseguibile) nella cartella <code>nome/</code></td></tr>
+<tr><td><code>cargo check</code></td><td>verifica che compili, senza produrre l'eseguibile (veloce)</td></tr>
+<tr><td><code>cargo build</code></td><td>compila in <code>target/debug/</code> (non ottimizzato, rapido da compilare)</td></tr>
+<tr><td><code>cargo run</code></td><td>compila se serve, poi esegue</td></tr>
+<tr><td><code>cargo build --release</code></td><td>compila ottimizzato in <code>target/release/</code> (per la produzione)</td></tr>
+</tbody>
+</table>
+</div>
+<p class="meta">Fonte: <a href="https://doc.rust-lang.org/book/ch01-03-hello-cargo.html">Book, 1.3 Hello, Cargo!</a></p>
+
+<h2>Struttura di un progetto</h2>
+<pre><code>nome/
+├── Cargo.toml      # manifesto: [package] + [dependencies]
+├── src/main.rs     # punto di ingresso: fn main()
+└── target/         # output di compilazione (non va su git)</code></pre>
+
+<h2>Sintassi vista finora</h2>
+<pre><code>fn main() {                 // funzione di ingresso del programma
+    let x = 5;              // immutabile: non si può riassegnare
+    let mut y = 5;          // mutabile
+    y = 6;
+    println!("{x} e {y}");  // macro (c'è il !): stampa "5 e 6"
+    println!("{}", x + y);  // segnaposto posizionale: stampa "11"
+}</code></pre>
+<p class="meta">Fonte: <a href="https://doc.rust-lang.org/book/ch03-01-variables-and-mutability.html">Book, 3.1 Variables and Mutability</a></p>
+
+<h2>Rust a confronto</h2>
+<div class="table-wrap">
+<table>
+<thead><tr><th></th><th>C</th><th>Java</th><th>Rust</th></tr></thead>
+<tbody>
+<tr><td>Esecuzione</td><td>nativo</td><td>JVM</td><td>nativo</td></tr>
+<tr><td>Memoria</td><td><code>free()</code> manuale</td><td>garbage collector</td><td>ownership (decide il compilatore)</td></tr>
+<tr><td>Variabili</td><td>mutabili, <code>const</code> per bloccarle</td><td>mutabili, <code>final</code> per bloccarle</td><td>immutabili, <code>mut</code> per sbloccarle</td></tr>
+<tr><td>Build e pacchetti</td><td>make, CMake…</td><td>Maven, Gradle</td><td>Cargo</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2>Leggere un errore</h2>
+<pre><code>error[E0384]: …messaggio…     ← codice errore (puoi cercarlo con rustc --explain E0384)
+ --> src/main.rs:3:5          ← file:riga:colonna
+help: …                       ← suggerimento, spesso già la correzione</code></pre>
+
+</main>
+</body>
+</html>
