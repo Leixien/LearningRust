@@ -1,0 +1,88 @@
+/* Foglio di stile condiviso da tutte le lezioni e i riferimenti. */
+:root {
+  --bg: #fffff8;
+  --fg: #1d1d1b;
+  --muted: #6b6b66;
+  --accent: #b7410e; /* ruggine */
+  --rule: #e4e2d6;
+  --code-bg: #f3f1e7;
+  --ok: #2f7a3e;
+  --ko: #b3261e;
+  --note-bg: #fbf3e4;
+  --measure: 38rem;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #161614; --fg: #e9e7df; --muted: #a09e95; --accent: #e07a48;
+    --rule: #33322d; --code-bg: #22211e; --ok: #6cc380; --ko: #f08a80; --note-bg: #26221a;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #161614; --fg: #e9e7df; --muted: #a09e95; --accent: #e07a48;
+  --rule: #33322d; --code-bg: #22211e; --ok: #6cc380; --ko: #f08a80; --note-bg: #26221a;
+}
+
+* { box-sizing: border-box; }
+html { font-size: 18px; }
+body {
+  margin: 0; padding: 2.5rem 1rem 4rem;
+  background: var(--bg); color: var(--fg);
+  font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  line-height: 1.6;
+}
+main { max-width: var(--measure); margin: 0 auto; }
+h1, h2, h3 { font-weight: 600; line-height: 1.25; }
+h1 { font-size: 2rem; margin: 0 0 .25rem; }
+h2 { font-size: 1.35rem; margin-top: 2.5rem; border-top: 1px solid var(--rule); padding-top: 1.25rem; }
+h3 { font-size: 1.1rem; margin-top: 1.75rem; }
+.kicker { color: var(--accent); text-transform: uppercase; letter-spacing: .08em; font-size: .75rem; font-family: system-ui, sans-serif; margin: 0; }
+.subtitle { color: var(--muted); font-style: italic; margin-top: 0; }
+.meta { font-family: system-ui, sans-serif; font-size: .8rem; color: var(--muted); }
+a { color: var(--accent); text-underline-offset: 2px; }
+code, pre { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: .85em; }
+code { background: var(--code-bg); padding: .1em .3em; border-radius: 3px; }
+pre { background: var(--code-bg); padding: .9rem 1rem; border-radius: 6px; overflow-x: auto; line-height: 1.45; }
+pre code { background: none; padding: 0; }
+.out { color: var(--muted); }
+.err { color: var(--ko); }
+.note, .tip, .task, .source, .ask {
+  border-left: 3px solid var(--accent); background: var(--note-bg);
+  padding: .75rem 1rem; margin: 1.5rem 0; border-radius: 0 6px 6px 0;
+}
+.note > :first-child, .tip > :first-child, .task > :first-child, .source > :first-child, .ask > :first-child { margin-top: 0; }
+.note > :last-child, .tip > :last-child, .task > :last-child, .source > :last-child, .ask > :last-child { margin-bottom: 0; }
+.task { border-left-color: var(--ok); }
+.label { font-family: system-ui, sans-serif; font-size: .72rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); display: block; margin-bottom: .25rem; }
+table { border-collapse: collapse; width: 100%; font-size: .9rem; margin: 1rem 0; }
+th, td { text-align: left; padding: .4rem .5rem; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-family: system-ui, sans-serif; font-size: .75rem; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); }
+.table-wrap { overflow-x: auto; }
+sup a { text-decoration: none; }
+ol.steps li { margin-bottom: .6rem; }
+details { margin: 1rem 0; }
+summary { cursor: pointer; font-family: system-ui, sans-serif; font-size: .9rem; color: var(--accent); }
+nav.pager { display: flex; justify-content: space-between; gap: 1rem; margin-top: 3rem; font-family: system-ui, sans-serif; font-size: .9rem; border-top: 1px solid var(--rule); padding-top: 1rem; }
+
+/* Quiz (vedi assets/quiz.js) */
+.quiz { font-family: system-ui, sans-serif; font-size: .95rem; }
+.quiz .q { margin: 1.5rem 0; }
+.quiz .q p { font-family: "Iowan Old Style", Palatino, Georgia, serif; font-size: 1.05rem; margin-bottom: .5rem; }
+.quiz button.opt {
+  display: block; width: 100%; text-align: left; margin: .35rem 0; padding: .55rem .8rem;
+  background: transparent; color: var(--fg); border: 1px solid var(--rule); border-radius: 6px;
+  font: inherit; cursor: pointer;
+}
+.quiz button.opt:hover:not(:disabled) { border-color: var(--accent); }
+.quiz button.opt.ok { border-color: var(--ok); color: var(--ok); font-weight: 600; }
+.quiz button.opt.ko { border-color: var(--ko); color: var(--ko); text-decoration: line-through; }
+.quiz button.opt:disabled { cursor: default; }
+.quiz .why { display: none; margin: .5rem 0 0; color: var(--muted); font-size: .9rem; }
+.quiz .q.done .why { display: block; }
+.quiz .score { font-weight: 600; }
+
+@media print {
+  body { background: #fff; color: #000; padding: 0; }
+  a { color: #000; }
+  .quiz button.opt { border-color: #999; }
+  nav.pager, .no-print { display: none; }
+}
