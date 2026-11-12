@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Learning Rust</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<main>
+
+<p class="kicker">Corso personale</p>
+<h1>Rust per il backend</h1>
+<p class="subtitle">Dalle basi a un'API HTTP open source. Lezioni brevi, da 10 minuti in su.</p>
+
+<div class="note">
+<span class="label">Come funziona</span>
+<p>Leggi una lezione, fai l'esercizio (sul tuo computer con <code>cargo</code> oppure nel browser con i pulsanti <strong>▶ Apri nel Playground</strong>) e rispondi al quiz. Il punteggio resta salvato in questo browser. Poi torna da Claude con <code>/teach</code> e raccontagli com'è andata: la lezione successiva parte da lì.</p>
+</div>
+
+<h2>Lezioni</h2>
+<ol class="lessons">
+<li><a href="lessons/0001-dal-sorgente-all-eseguibile.html">Dal sorgente all'eseguibile</a> <span class="badge" data-quiz="0001"></span><br>
+<span class="meta">Compilazione, Cargo, primo errore del compilatore · ~15 min</span></li>
+</ol>
+
+<h2>Schede di riferimento</h2>
+<ul>
+<li><a href="reference/cargo-e-basi.html">Cargo e sintassi di base</a></li>
+</ul>
+
+<h2>Il resto del percorso</h2>
+<ul>
+<li><a href="https://github.com/Leixien/LearningRust/blob/main/MISSION.md">Missione</a>: perché sto imparando</li>
+<li><a href="https://github.com/Leixien/LearningRust/blob/main/RESOURCES.md">Fonti e community</a></li>
+<li><a href="https://github.com/Leixien/LearningRust/tree/main/learning-records">Cosa ho imparato</a></li>
+<li><a href="https://github.com/Leixien/LearningRust">Repository</a></li>
+</ul>
+
+</main>
+<script>
+document.querySelectorAll("[data-quiz]").forEach(function (el) {
+  try {
+    var r = JSON.parse(localStorage.getItem("lr:quiz:" + el.dataset.quiz));
+    if (!r) { el.textContent = "da fare"; return; }
+    el.textContent = "quiz " + r.correct + "/" + r.total + " · " + r.date;
+    if (r.correct === r.total) el.classList.add("ok");
+  } catch (e) { el.textContent = ""; }
+});
+</script>
+</body>
+</html>

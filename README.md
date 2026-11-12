@@ -4,7 +4,7 @@ Il mio percorso per imparare Rust e costruire un backend open source, guidato da
 
 ## Come si usa
 
-Apri Claude Code nel repo e scrivi `/teach` (oppure `/teach <argomento>`): il docente legge lo stato qui sotto e propone la prossima lezione.
+Le lezioni si leggono su **https://leixien.github.io/LearningRust/** (GitHub Pages). Apri Claude Code nel repo e scrivi `/teach` (oppure `/teach <argomento>`): il docente legge lo stato qui sotto e propone la prossima lezione.
 
 | Cosa | Dove |
 |---|---|

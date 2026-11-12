@@ -6,3 +6,5 @@
 - Potrebbe studiare anche dal telefono / sessione cloud: offrire sempre il Rust Playground come alternativa al terminale locale.
 - Ha chiesto di non escludere nulla dal percorso.
 - Esercizi pratici: nella cartella `pratica/` del repo (progetti Cargo creati dall'utente).
+- **Pubblicazione:** le lezioni si leggono su GitHub Pages (https://leixien.github.io/LearningRust/), pubblicate dal workflow `.github/workflows/pages.yml` a ogni push su `main`. Viene pubblicato solo `index.html`, `lessons/`, `reference/`, `assets/`: i link a file `.md` vanno fatti verso github.com, non relativi.
+- **Ogni nuova lezione:** aggiungerla a `index.html` (con `<span class="badge" data-quiz="NNNN">`), dare `data-id="NNNN"` al quiz e includere `assets/playground.js`. Gli esercizi di codice vanno in `<pre class="play">` con un programma completo e compilabile (con `data-mode="test"` se contiene `#[test]`), così si possono fare anche dal browser.

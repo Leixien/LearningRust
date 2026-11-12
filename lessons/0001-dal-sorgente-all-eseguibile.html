@@ -51,7 +51,7 @@
 <span class="label">Esercizio · la tua vittoria di oggi</span>
 <ol class="steps">
 <li><strong>Installa Rust</strong> seguendo <a href="https://rustup.rs/">rustup.rs</a> (su Windows scarica l'installer), poi verifica con <code>cargo --version</code>.<br>
-<em>Non sei al tuo computer?</em> Fai i passi 4 e 5 nel <a href="https://play.rust-lang.org/">Rust Playground</a> e torna ai passi 2-3 quando puoi.</li>
+<em>Non sei al tuo computer?</em> Fai i passi 4 e 5 con i pulsanti <strong>▶ Apri nel Playground</strong>: il codice si apre già pronto nel browser, premi <em>Run</em>. Torna ai passi 2-3 quando puoi.</li>
 <li>Dalla cartella del repo crea un progetto:
 <pre><code>cargo new pratica/ciao
 cd pratica/ciao</code></pre></li>
@@ -66,9 +66,13 @@ cd pratica/ciao</code></pre></li>
      Running `target/debug/ciao`</span>
 Hello, world!</code></pre>
 <code>cargo run</code> ha <em>compilato</em> e poi <em>eseguito</em> l'eseguibile che trovi in <code>target/debug/</code>.</li>
-<li>Apri <code>src/main.rs</code>. Al posto di <code>"Hello, world!"</code> fai stampare un messaggio tuo e rilancia <code>cargo run</code>.</li>
+<li>Apri <code>src/main.rs</code>:
+<pre class="play"><code>fn main() {
+    println!("Hello, world!");
+}</code></pre>
+Al posto di <code>"Hello, world!"</code> fai stampare un messaggio tuo e rilancia <code>cargo run</code>.</li>
 <li><strong>Rompilo apposta.</strong> Sostituisci il corpo di <code>main</code> con questo:
-<pre><code>fn main() {
+<pre class="play"><code>fn main() {
     let x = 5;
     x = 6;
     println!("{x}");
@@ -98,7 +102,7 @@ Applica il suggerimento (<code>let mut x</code>) e rilancia: ora stampa <code>6<
 <h2>4. Richiamo</h2>
 <p>Prova a rispondere <em>senza</em> tornare su. Lo sforzo di ricordare è proprio ciò che fissa le cose.</p>
 
-<div class="quiz">
+<div class="quiz" data-id="0001">
 <div class="q">
 <p>1. Cosa produce <code>cargo build</code> su un progetto Rust?</p>
 <button class="opt">Bytecode per la JVM</button>
@@ -150,14 +154,15 @@ Applica il suggerimento (<code>let mut x</code>) e rilancia: ora stampa <code>6<
 <p>Chiedi al tuo docente (Claude) qualsiasi cosa non sia chiara: un errore che non capisci, l'installazione che non va, un concetto di teoria da ripassare. Quando hai finito, dimmi com'è andata: incollami l'output o raccontami cosa hai sbagliato nel quiz, così la prossima lezione parte da lì.</p>
 </div>
 
-<p class="meta">Scheda di riferimento: <a href="../reference/cargo-e-basi.html">Cargo e sintassi di base</a> · Fonti: <a href="../RESOURCES.md">RESOURCES.md</a></p>
+<p class="meta">Scheda di riferimento: <a href="../reference/cargo-e-basi.html">Cargo e sintassi di base</a> · Fonti: <a href="https://github.com/Leixien/LearningRust/blob/main/RESOURCES.md">RESOURCES.md</a></p>
 
 <nav class="pager">
-<span>Inizio del percorso</span>
+<a href="../index.html">← Indice del corso</a>
 <span>Prossima: tipi, funzioni e controllo di flusso (in preparazione)</span>
 </nav>
 
 </main>
 <script src="../assets/quiz.js"></script>
+<script src="../assets/playground.js"></script>
 </body>
 </html>

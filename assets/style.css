@@ -63,6 +63,20 @@ details { margin: 1rem 0; }
 summary { cursor: pointer; font-family: system-ui, sans-serif; font-size: .9rem; color: var(--accent); }
 nav.pager { display: flex; justify-content: space-between; gap: 1rem; margin-top: 3rem; font-family: system-ui, sans-serif; font-size: .9rem; border-top: 1px solid var(--rule); padding-top: 1rem; }
 
+/* Playground (vedi assets/playground.js) */
+a.play-btn {
+  display: inline-block; margin: -.5rem 0 1rem; padding: .35rem .75rem;
+  font-family: system-ui, sans-serif; font-size: .85rem; text-decoration: none;
+  border: 1px solid var(--accent); border-radius: 6px;
+}
+a.play-btn:hover { background: var(--accent); color: var(--bg); }
+
+/* Indice del corso */
+ol.lessons { padding-left: 1.2rem; }
+ol.lessons li { margin: .6rem 0; }
+.badge { font-family: system-ui, sans-serif; font-size: .75rem; color: var(--muted); margin-left: .4rem; }
+.badge.ok { color: var(--ok); }
+
 /* Quiz (vedi assets/quiz.js) */
 .quiz { font-family: system-ui, sans-serif; font-size: .95rem; }
 .quiz .q { margin: 1.5rem 0; }
